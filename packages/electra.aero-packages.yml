@@ -1,0 +1,31 @@
+generated: '2026-08-12'
+method: searched
+source: registry search (npm, PyPI, RubyGems, crates.io, pkg.go.dev, NuGet, Maven Central, Packagist)
+package_count: 0
+packages: []
+note: >-
+  No first-party Electra.aero client library exists on any public registry. npm search for
+  "electra aero" returns only unrelated projects (@electra.finance/sdk — a DeFi SDK;
+  electra-smart / homebridge-electra-smart — Israeli air-conditioner controls; @aero/*
+  — an unrelated JS org). PyPI has no `electra-aero`, `electraaero` or `electra` project
+  (all 404). The Electra.aero GitHub organization (github.com/Electra-Aero, created
+  2026-06-15) has 0 public repositories, no public members and no description, so there is
+  no source-code surface to package. NO `SDKs` pointer is emitted in apis.yml — there is
+  no SDK to claim. package_count 0 is a checked result, not an unchecked field.
+registries_checked:
+  - registry: npm
+    query: electra aero
+    result: no first-party match
+    checked: '2026-08-12'
+  - registry: pypi
+    query: electra-aero / electraaero / electra
+    result: 404 on all three
+    checked: '2026-08-12'
+  - registry: github
+    query: orgs/Electra-Aero
+    result: 'org exists, public_repos 0, unverified, no public members'
+    checked: '2026-08-12'
+  - registry: postman
+    query: electra aero
+    result: 0 public collections, workspaces or APIs
+    checked: '2026-08-12'

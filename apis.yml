@@ -1,23 +1,138 @@
 aid: electra.aero
 name: Electra.aero
-description: 'Electra.aero is a company surfaced via the API Evangelist harvest backlog (source: secondary-market)
-  and added to the network as a stub for full-pipeline profiling.'
+description: >-
+  Electra is an American aerospace manufacturer developing hybrid-electric "Ultra Short"
+  aircraft that combine blown lift with hybrid-electric propulsion to take off and land in
+  roughly 150 feet, removing the runway from regional air travel. Founded in 2020 by Dr.
+  John Langford, the founder of Aurora Flight Sciences, with MIT professors John Hansman
+  and Mark Drela as technical advisors, Electra flew its EL2 Goldfinch technology
+  demonstrator in November 2023 and submitted an FAA Part 23 type-certification
+  application for the nine-passenger EL9 Ultra Short in December 2025. The company reports
+  more than 2,200 pre-orders from over 60 operators, and works both a commercial regional
+  air-mobility market and a defense last-tactical-leg airlift market backed by U.S. Air
+  Force SBIR Phase III and STTR contracts. It is headquartered in Manassas, Virginia, with
+  operations in Cambridge, Massachusetts and Switzerland and a production facility under
+  development at AirPark Ohio adjacent to Springfield-Beckley Municipal Airport. Strategic
+  investors include Lockheed Martin Ventures, Honeywell and Safran. Electra publishes no
+  developer program, API reference or machine-readable specification; the one public,
+  anonymous JSON API it serves is the Statamic CMS content surface behind its newsroom,
+  discovered and documented here by probe.
+image: https://electra-aero.s3.us-east-1.amazonaws.com/electra-logo.svg
 url: https://raw.githubusercontent.com/api-evangelist/electra.aero/refs/heads/main/apis.yml
 x-type: company
 x-source: harvest:secondary-market
-x-tier: stub
-x-tier-reason: harvest
 specificationVersion: '0.20'
 created: '2026-08-12'
 modified: '2026-08-12'
 tags:
+- Aerospace
+- Aviation
+- Aircraft Manufacturing
+- Advanced Air Mobility
+- Electric Aviation
+- Hybrid-Electric Propulsion
+- Regional Air Mobility
+- Defense
+- Transportation
+- Content
 - Company
-apis: []
+apis:
+- name: Electra.aero Content API
+  description: >-
+    Public, unauthenticated, CORS-open JSON API serving the Electra.aero newsroom — press
+    releases, program milestones and syndicated coverage. This is the default Statamic
+    Content REST API behind the corporate site; Electra neither documents nor supports it.
+    Discovered and verified by probe on 2026-08-12 (124 entries, HTTP 200 anonymous). Only
+    the `news` collection is exposed; every other Statamic resource returns 404.
+  humanURL: https://electra.aero/news
+  baseURL: https://electra.aero/api
+  tags:
+  - Content
+  - News
+  - Newsroom
+  properties:
+  - type: OpenAPI
+    url: openapi/electra.aero-content-openapi.yml
+  - type: Overlay
+    url: overlays/electra.aero-content-overlay.yaml
+  - type: DataModel
+    url: data-model/electra.aero-data-model.yml
+  - type: ErrorCatalog
+    url: errors/electra.aero-problem-types.yml
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
 - FN: APIs.json
   email: info@apis.io
 common:
+- type: AgenticAccess
+  url: agentic-access/electra.aero-agentic-access.yml
 - type: Website
-  url: https://www.hiive.com/securities/electra.aero-stock
+  url: https://electra.aero/
+- type: Blog
+  url: https://electra.aero/news
+- type: Support
+  url: https://electra.aero/contact
+- type: LinkedIn
+  url: https://www.linkedin.com/company/electra-aero/
+- type: Twitter
+  url: https://x.com/ElectraAero
+- type: YouTube
+  url: https://www.youtube.com/@Electraaero
+- type: Careers
+  url: https://electra.aero/careers
+- type: Authentication
+  url: authentication/electra.aero-authentication.yml
+- type: Conventions
+  url: conventions/electra.aero-conventions.yml
+- type: Conformance
+  url: conformance/electra.aero-conformance.yml
+- type: Lifecycle
+  url: lifecycle/electra.aero-lifecycle.yml
+- type: Packages
+  url: packages/electra.aero-packages.yml
+- type: RateLimits
+  url: rate-limits/electra.aero-rate-limits.yml
+- type: Plans
+  url: plans/electra.aero-plans-pricing.yml
+- type: LLMsTxt
+  url: llms/electra.aero-llms.txt
+- type: AgentSkill
+  url: skills/_index.yml
+- type: DomainSecurity
+  url: security/electra.aero-domain-security.yml
+x-enrichment:
+  date: '2026-08-12'
+  status: enriched
+  artifacts_added: 18
+  pass: local-v1
+x-coverage:
+  state: covered
+  detail: >-
+    Electra.aero publishes no developer program, but STEP 0b contract discovery found a
+    live, anonymous, CORS-open JSON API on the provider's own host - the Statamic content
+    surface at https://electra.aero/api serving 124 newsroom entries - which is captured
+    here as a probe-derived OpenAPI 3.1 rather than recorded as "no API surface".
+  evidence:
+    - url: https://electra.aero/api/collections/news/entries
+      status: 200
+    - url: https://electra.aero/openapi.json
+      status: 404
+    - url: https://electra.aero/.well-known/agent-card.json
+      status: 404
+  checked: '2026-08-12'
+x-enrichment-notes: >-
+  Pointers deliberately NOT emitted, because the underlying thing does not exist and a
+  pointer would assert that it does - WellKnown and SecurityTxt (all eight /.well-known/
+  paths 404), AgentCard (agent-card.json and agent.json both 404), MCPServer (no server
+  published; mcp/ holds a candidate projection only), SDKs (no package on any registry),
+  StatusPage (status.electra.aero NXDOMAIN), Deprecation (no policy), Security and
+  VulnerabilityDisclosure (no security.txt, no disclosure page), Compliance and TrustCenter
+  (no published certifications), Idempotency (read-only surface, no idempotency contract),
+  ChangeLog (the newsroom is corporate news, not a dated API changelog), AsyncAPI and
+  Webhooks (no event surface), Pricing, SignUp, TermsOfService, PrivacyPolicy,
+  DeveloperPortal, Documentation, APIReference, GettingStarted, Roadmap, Sandbox, CLI,
+  Postman and GitHubOrganization (none published - see x-coverage). The
+  github.com/Electra-Aero organization does exist but has zero public repositories, no
+  public members and no verification, so it is recorded here rather than wired as a
+  GitHubOrganization pointer.

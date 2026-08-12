@@ -1,0 +1,49 @@
+generated: '2026-08-12'
+method: probed
+source: https://electra.aero/.well-known/
+host: https://electra.aero
+result: no-hits
+note: >-
+  Every /.well-known/ path probed on electra.aero returned a genuine HTTP 404 with the
+  site's HTML 404 page — not a soft-200 SPA catch-all. NO WellKnown, SecurityTxt or
+  AgentCard pointer is emitted in apis.yml, because a recorded absence is not a presence.
+  api.electra.aero, developer.electra.aero and docs.electra.aero do not resolve (curl
+  exit 6 / no DNS), so there is no second host to probe.
+documents:
+  - path: /.well-known/security.txt
+    status: 404
+    file: null
+  - path: /.well-known/openid-configuration
+    status: 404
+    file: null
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+    file: null
+  - path: /.well-known/oauth-protected-resource
+    status: 404
+    file: null
+  - path: /.well-known/api-catalog
+    status: 404
+    file: null
+  - path: /.well-known/ai-plugin.json
+    status: 404
+    file: null
+  - path: /.well-known/agent-card.json
+    status: 404
+    file: null
+  - path: /.well-known/agent.json
+    status: 404
+    file: null
+hosts_unresolved:
+  - host: api.electra.aero
+    result: dns-nxdomain
+  - host: developer.electra.aero
+    result: dns-nxdomain
+  - host: docs.electra.aero
+    result: dns-nxdomain
+  - host: status.electra.aero
+    result: dns-nxdomain
+x-evidence:
+  fetched: '2026-08-12'
+  method: HTTP GET, anonymous, followed redirects
+  user_agent: APIEvangelistBot/1.0

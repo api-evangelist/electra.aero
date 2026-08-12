@@ -1,0 +1,64 @@
+generated: '2026-08-12'
+method: probed
+source: https://electra.aero/api
+format: flat-message-envelope
+rfc9457: false
+envelope:
+  content_type: application/json
+  shape: '{"message": "<string>"}'
+  fields:
+    - name: message
+      type: string
+      description: Single human-readable string. No code, type, detail, instance or trace id.
+  note: >-
+    Not RFC 9457 problem+json. There is no machine-actionable error code, no stable `type`
+    URI and no request identifier, so an agent cannot distinguish "collection not enabled"
+    from "entry id not found" — both return the identical body.
+problems:
+  - status: 404
+    title: Not found
+    body: '{"message":"Not found."}'
+    observed_on:
+      - https://electra.aero/api/collections/news/entries/does-not-exist
+      - https://electra.aero/api/collections/videos/entries
+      - https://electra.aero/api/globals
+      - https://electra.aero/api/forms
+      - https://electra.aero/api/taxonomies
+    meaning: >-
+      The entry id does not exist, OR the collection/resource is not exposed through the
+      API at all. The two cases are indistinguishable from the response.
+    remediation: Verify the entry id from listNewsEntries; only the `news` collection is exposed.
+    source_operation: openapi/electra.aero-content-openapi.yml#getNewsEntry
+  - status: 422
+    title: Forbidden filter
+    body: '{"message":"Forbidden filter: featured"}'
+    observed_on:
+      - 'https://electra.aero/api/collections/news/entries?filter[featured:is]=true'
+    meaning: >-
+      Query filtering is disabled. Statamic requires filters to be allow-listed per
+      collection and none are allow-listed here, so every filter[...] parameter is rejected.
+    remediation: >-
+      Drop filter[...] parameters. Use `sort`, `fields`, `limit` and `page`, and filter
+      client-side.
+    source_operation: openapi/electra.aero-content-openapi.yml#listNewsEntries
+  - status: 419
+    title: Page Expired
+    body: HTML (Laravel CSRF page)
+    observed_on:
+      - 'POST https://electra.aero/graphql'
+    meaning: >-
+      Non-API POSTs hit the Laravel/Statamic web middleware and are rejected for a missing
+      CSRF token. Recorded for completeness - it is a site behavior, not an API error class.
+    remediation: n/a
+not_observed:
+  - status: 401
+    note: No authenticated surface exists, so no 401 was ever returned.
+  - status: 403
+    note: Not observed on any probed path.
+  - status: 429
+    note: >-
+      No rate-limit response observed and no RateLimit-* / Retry-After headers are sent.
+      See rate-limits/electra.aero-rate-limits.yml.
+x-evidence:
+  fetched: '2026-08-12'
+  method: anonymous HTTP GET/POST against https://electra.aero

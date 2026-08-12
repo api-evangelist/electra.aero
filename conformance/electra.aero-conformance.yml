@@ -1,0 +1,66 @@
+generated: '2026-08-12'
+method: derived
+source: openapi/electra.aero-content-openapi.yml
+note: >-
+  Derived from the probe-built OpenAPI and from live response headers. Electra.aero
+  publishes no compliance program, no certification page and no trust center, so NO
+  `Compliance` pointer is emitted in apis.yml.
+standards:
+  - id: openapi-3.1
+    conforms: true
+    evidence: >-
+      openapi/electra.aero-content-openapi.yml — authored by API Evangelist from probes,
+      not published by the provider.
+  - id: rfc9457-problem-details
+    conforms: false
+    evidence: 'Errors return application/json {"message":"..."}; no type/title/status/detail members.'
+  - id: oauth2
+    conforms: false
+    evidence: No securitySchemes; /.well-known/oauth-authorization-server returns 404.
+  - id: openid-connect
+    conforms: false
+    evidence: /.well-known/openid-configuration returns 404.
+  - id: rfc9116-security-txt
+    conforms: false
+    evidence: /.well-known/security.txt returns 404.
+  - id: rfc8615-well-known
+    conforms: false
+    evidence: No /.well-known/ path returns a document; all eight probed paths 404.
+  - id: rfc8594-sunset-header
+    conforms: false
+    evidence: No Sunset or Deprecation header observed; no deprecation policy published.
+  - id: rfc9111-http-caching
+    conforms: partial
+    evidence: 'cache-control: no-cache, private is sent; no ETag or Last-Modified, so conditional requests are unusable.'
+  - id: cors
+    conforms: true
+    evidence: 'access-control-allow-origin: * on the content API.'
+  - id: pagination
+    conforms: true
+    evidence: page/limit params with links{first,last,prev,next} and meta{current_page,last_page,total}.
+  - id: idempotency
+    conforms: false
+    evidence: Read-only surface; no idempotency key contract.
+  - id: json-api
+    conforms: false
+    evidence: Laravel pagination envelope, not the JSON:API media type or document structure.
+  - id: asyncapi
+    conforms: false
+    evidence: No events, streaming or webhook surface exists.
+  - id: a2a
+    conforms: false
+    evidence: /.well-known/agent-card.json and /.well-known/agent.json both 404.
+  - id: mcp
+    conforms: false
+    evidence: No hosted MCP server published or discoverable.
+  - id: llms-txt
+    conforms: false
+    evidence: https://electra.aero/llms.txt returns 404.
+sector_regimes:
+  note: >-
+    Electra is an FAA Part 23 type-certification applicant and a U.S. Air Force
+    contractor (SBIR Phase III / STTR). Those are aircraft-airworthiness and defense
+    acquisition regimes; they carry no API conformance obligation and no certification
+    claim was published on the site, so none is asserted here.
+x-evidence:
+  fetched: '2026-08-12'

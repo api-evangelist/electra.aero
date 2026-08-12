@@ -1,0 +1,71 @@
+generated: '2026-08-12'
+method: derived
+source: openapi/electra.aero-content-openapi.yml
+note: >-
+  Derived from the observed response payload of the Electra content API. The exposed model
+  is a single content entity plus two lookup objects — this is a CMS newsroom surface, so
+  the graph is intentionally small. Nothing was inferred from the Statamic product schema.
+entities:
+  - name: Entry
+    label: News entry
+    id_field: id
+    id_format: uuid
+    id_prefix: null
+    endpoints:
+      list: openapi/electra.aero-content-openapi.yml#listNewsEntries
+      get: openapi/electra.aero-content-openapi.yml#getNewsEntry
+    count_observed: 124
+    key_fields: [id, title, slug, summary, date, permalink, source_url, featured, status]
+    domain: newsroom
+  - name: Collection
+    label: Statamic collection
+    id_field: handle
+    values_observed: [news]
+    note: >-
+      Only the `news` collection is exposed; probes of videos, team, pages, careers and
+      blog all returned 404.
+    domain: cms
+  - name: Blueprint
+    label: Statamic blueprint (field schema)
+    id_field: handle
+    values_observed: [news]
+    domain: cms
+  - name: Asset
+    label: Media asset
+    id_field: id
+    id_prefix: 'assets::'
+    note: >-
+      Referenced from Entry.featured_image as a nested object. There is NO asset endpoint —
+      /api/assets/{container} returns 404 — so assets are read-only embeds, not a
+      first-class resource.
+    domain: media
+relationships:
+  - from: Entry
+    to: Collection
+    type: belongs_to
+    via: collection
+    cardinality: many-to-one
+  - from: Entry
+    to: Blueprint
+    type: belongs_to
+    via: blueprint
+    cardinality: many-to-one
+  - from: Entry
+    to: Asset
+    type: has_one
+    via: featured_image
+    cardinality: one-to-one
+    optional: true
+  - from: Entry
+    to: Entry
+    type: belongs_to
+    via: origin_id
+    cardinality: many-to-one
+    optional: true
+    note: Localization origin pointer; observed null on every entry (single locale, `default`).
+external_references:
+  - field: source_url
+    describes: >-
+      Syndicated coverage links out to the publishing outlet (Aviation Week, PR Newswire,
+      etc.). Not a modeled relationship — an opaque external URL.
+render: null

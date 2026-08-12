@@ -1,0 +1,93 @@
+generated: '2026-08-12'
+method: probed
+source: https://electra.aero/api
+docs: null
+note: >-
+  Electra.aero publishes no API documentation, so every convention below was established by
+  probing the live surface on 2026-08-12 rather than read from a reference page. The API is
+  the default Statamic Content REST API; its semantics are Laravel/Statamic conventions,
+  not a contract Electra has authored or committed to.
+authentication:
+  style: none
+  detail: Anonymous read. See authentication/electra.aero-authentication.yml.
+idempotency:
+  supported: false
+  header: null
+  detail: >-
+    No idempotency contract. The surface is read-only (GET), so there is nothing to make
+    idempotent; no Idempotency-Key header is accepted or documented. NO `Idempotency`
+    pointer is emitted in apis.yml — there is no idempotency support to claim.
+pagination:
+  style: page-number
+  params:
+    - name: page
+      description: 1-indexed page number.
+    - name: limit
+      description: Entries per page.
+  response_fields:
+    envelope: '{data: [], links: {}, meta: {}}'
+    links: [first, last, prev, next]
+    meta: [current_page, from, to, last_page, per_page, total, path, links]
+  observed:
+    total: 124
+    note: 'limit=2 produced meta.last_page 62 — the pager recalculates correctly.'
+  cursor_support: false
+sparse_fields:
+  supported: true
+  param: fields
+  style: comma-separated field names
+  observed: 'fields=title,slug returned objects containing only title and slug.'
+sorting:
+  supported: true
+  param: sort
+  style: comma-separated field names, leading `-` for descending
+  observed: 'sort=-date returned the newest entry (2026-07-31) first.'
+filtering:
+  supported: false
+  param: 'filter[<field>:<condition>]'
+  detail: >-
+    Rejected with HTTP 422 {"message":"Forbidden filter: <field>"} — no filter is
+    allow-listed on the collection.
+field_expansion:
+  supported: false
+metadata:
+  supported: false
+request_tracing:
+  request_id_header: null
+  detail: No request-id, trace or correlation header is returned.
+versioning:
+  scheme: none
+  detail: >-
+    The base path is /api with no version segment, no version header and no date-pinning.
+    A consumer has no way to pin behavior; a CMS change silently changes the payload.
+  current: null
+error_envelope:
+  format: flat-message-envelope
+  detail: See errors/electra.aero-problem-types.yml. Not RFC 9457.
+rate_limit_signaling:
+  headers: []
+  detail: See rate-limits/electra.aero-rate-limits.yml — none published or observed.
+caching:
+  cache_control: 'no-cache, private'
+  etag: false
+  last_modified_header: false
+  detail: >-
+    Every response is marked no-cache/private, so conditional requests are not usable.
+    Entry payloads do carry `last_modified` and `updated_at` fields for change detection.
+cors:
+  access_control_allow_origin: '*'
+  detail: Fully browser-callable cross-origin; confirmed on the list operation.
+transport:
+  https: true
+  http2: true
+  server: nginx
+  powered_by: Statamic
+cross_links:
+  errors: errors/electra.aero-problem-types.yml
+  authentication: authentication/electra.aero-authentication.yml
+  rate_limits: rate-limits/electra.aero-rate-limits.yml
+  lifecycle: lifecycle/electra.aero-lifecycle.yml
+  openapi: openapi/electra.aero-content-openapi.yml
+x-evidence:
+  fetched: '2026-08-12'
+  base: https://electra.aero/api/collections/news/entries

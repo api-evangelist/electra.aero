@@ -1,0 +1,43 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for Electra.aero Content API
+  version: 1.0.0
+extends: openapi/electra.aero-content-openapi.yml
+x-provenance:
+  generated: '2026-08-12'
+  method: generated
+  source: >-
+    API Evangelist enrichment pipeline. Records the annotations we add on top of the
+    probe-derived specification; the specification itself is never mutated.
+actions:
+  - target: $.info
+    update:
+      x-apievangelist-provider: electra.aero
+      x-apievangelist-profile: https://apis.io/provider/electra.aero
+      x-apievangelist-spec-origin: probed
+      x-apievangelist-provider-published: false
+  - target: $.info
+    update:
+      x-apievangelist-note: >-
+        This surface is the Statamic CMS content API behind electra.aero. Electra does not
+        document, version or support it. Treat it as observed behavior with no stability
+        guarantee.
+  - target: $.paths['/collections/news/entries'].get
+    update:
+      x-apievangelist-artifacts:
+        conventions: conventions/electra.aero-conventions.yml
+        errors: errors/electra.aero-problem-types.yml
+        rate_limits: rate-limits/electra.aero-rate-limits.yml
+      x-apievangelist-agent-note: >-
+        Filtering is rejected (422 Forbidden filter). Page with `page`+`limit`, order with
+        `sort=-date`, and narrow the payload with `fields` — then filter client-side.
+  - target: $.paths['/collections/news/entries/{id}'].get
+    update:
+      x-apievangelist-agent-note: >-
+        404 is ambiguous — it means either "no such entry" or "resource not exposed".
+        Resolve ids from listNewsEntries rather than constructing them.
+  - target: $.components.schemas.Entry
+    update:
+      x-apievangelist-change-detection: >-
+        `last_modified` and `updated_at` are the only change signals; there is no ETag,
+        Last-Modified header or webhook, so polling is the sole synchronization strategy.

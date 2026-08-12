@@ -1,0 +1,242 @@
+openapi: 3.1.0
+info:
+  title: Electra.aero Content API (news)
+  version: '1.0.0'
+  summary: Public, unauthenticated read-only JSON API serving the Electra newsroom.
+  description: >-
+    Electra.aero publishes no developer program and no API reference. This document was
+    DERIVED FROM LIVE PROBES of the Statamic Content REST API that electra.aero serves at
+    https://electra.aero/api on 2026-08-12. Every path, parameter, status code and response
+    field below was observed on an anonymous request — nothing here is inferred from the
+    Statamic product documentation and nothing was invented.
+
+    Only the `news` collection is exposed. Probes of /api/collections/{videos,team,pages,
+    careers,blog}/entries, /api/globals, /api/forms, /api/users, /api/assets/{container},
+    /api/navs/{nav}/tree and /api/taxonomies/{taxonomy}/terms all returned 404
+    {"message":"Not found."}, so they are deliberately omitted rather than documented
+    speculatively. Filtering via filter[...] is rejected with 422
+    {"message":"Forbidden filter: <field>"}.
+
+    This is an undocumented CMS content surface, not a product API. It is nonetheless
+    real, anonymous, CORS-open (access-control-allow-origin: *) and machine-readable.
+  contact:
+    name: Electra.aero
+    url: https://electra.aero/contact
+  x-provenance:
+    method: probed
+    generated: '2026-08-12'
+    probed: '2026-08-12'
+    probed_by: API Evangelist enrichment pipeline (local-v1)
+    provider_published_spec: false
+    note: >-
+      Electra.aero does not publish this specification. API Evangelist authored it from
+      observed responses so the surface is machine-readable; it is a description of
+      observed behavior, not a provider contract, and carries no stability guarantee.
+servers:
+  - url: https://electra.aero/api
+    description: Production content API (observed 2026-08-12)
+tags:
+  - name: news
+    description: Electra newsroom and in-the-news entries.
+paths:
+  /collections/news/entries:
+    get:
+      operationId: listNewsEntries
+      summary: List news entries
+      description: >-
+        Returns a paginated list of published Electra news entries. Observed 124 total
+        entries on 2026-08-12. Anonymous request, HTTP 200, content-type application/json.
+      tags: [news]
+      security: []
+      parameters:
+        - name: limit
+          in: query
+          description: Entries per page. Observed honored (limit=1 and limit=2 both returned exactly that many entries and recalculated meta.last_page).
+          required: false
+          schema:
+            type: integer
+            minimum: 1
+          example: 25
+        - name: page
+          in: query
+          description: 1-indexed page number. Reflected in meta.current_page and the links object.
+          required: false
+          schema:
+            type: integer
+            minimum: 1
+          example: 1
+        - name: fields
+          in: query
+          description: >-
+            Comma-separated sparse fieldset. Observed - `fields=title,slug` returned entry
+            objects containing only `title` and `slug`.
+          required: false
+          schema:
+            type: string
+          example: title,slug,date,permalink
+        - name: sort
+          in: query
+          description: >-
+            Comma-separated sort fields; a leading `-` reverses. Observed - `sort=-date`
+            returned the most recent entry first.
+          required: false
+          schema:
+            type: string
+          example: '-date'
+      responses:
+        '200':
+          description: A page of news entries.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EntryCollection'
+        '422':
+          description: >-
+            Returned when an unpermitted query filter is supplied. Observed on
+            `?filter[featured:is]=true` with body {"message":"Forbidden filter: featured"}.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              example:
+                message: 'Forbidden filter: featured'
+  /collections/news/entries/{id}:
+    get:
+      operationId: getNewsEntry
+      summary: Get a single news entry
+      description: Returns one news entry by its Statamic UUID. Observed HTTP 200 for a known id.
+      tags: [news]
+      security: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Entry UUID, as returned in `data[].id` from listNewsEntries.
+          schema:
+            type: string
+            format: uuid
+          example: fc720a14-7b91-4222-955b-f6515d87ebff
+      responses:
+        '200':
+          description: The news entry.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Entry'
+                required: [data]
+        '404':
+          description: >-
+            No entry with that id. Observed body {"message":"Not found."} — a bare message
+            envelope, not RFC 9457 application/problem+json.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              example:
+                message: Not found.
+components:
+  securitySchemes: {}
+  schemas:
+    EntryCollection:
+      type: object
+      description: Laravel-style paginated envelope observed on the list operation.
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Entry'
+        links:
+          $ref: '#/components/schemas/PaginationLinks'
+        meta:
+          $ref: '#/components/schemas/PaginationMeta'
+      required: [data, links, meta]
+    PaginationLinks:
+      type: object
+      properties:
+        first: { type: [string, 'null'], format: uri }
+        last: { type: [string, 'null'], format: uri }
+        prev: { type: [string, 'null'], format: uri }
+        next: { type: [string, 'null'], format: uri }
+    PaginationMeta:
+      type: object
+      properties:
+        current_page: { type: integer }
+        from: { type: [integer, 'null'] }
+        to: { type: [integer, 'null'] }
+        last_page: { type: integer }
+        per_page: { type: integer }
+        total: { type: integer, description: 'Observed 124 on 2026-08-12.' }
+        path: { type: string, format: uri }
+        links:
+          type: array
+          description: Rendered pager links (url, label, page, active).
+          items:
+            type: object
+            properties:
+              url: { type: [string, 'null'], format: uri }
+              label: { type: string }
+              page: { type: [integer, 'null'] }
+              active: { type: boolean }
+    Entry:
+      type: object
+      description: >-
+        Field set observed verbatim on a news entry. Values may be null where the editor
+        left the field empty (observed on mount, order, origin_id, source_title, updated_by).
+      properties:
+        id: { type: string, format: uuid }
+        api_url: { type: string, format: uri, description: Self link into this API. }
+        edit_url: { type: string, format: uri, description: Statamic control-panel URL (requires provider login). }
+        permalink: { type: string, format: uri }
+        url: { type: string, description: Site-relative path. }
+        uri: { type: string, description: Site-relative path. }
+        slug: { type: string }
+        title: { type: string }
+        summary: { type: [string, 'null'] }
+        body_text:
+          type: array
+          description: Structured body blocks; observed empty for syndicated in-the-news entries.
+          items: { type: object }
+        date: { type: string, format: date-time }
+        last_modified: { type: string, format: date-time }
+        updated_at: { type: string, format: date-time }
+        updated_by: { type: [object, 'null'] }
+        status: { type: string, examples: [published] }
+        published: { type: boolean }
+        private: { type: boolean }
+        featured: { type: boolean }
+        featured_image:
+          type: [object, 'null']
+          description: Asset reference object.
+        source_title: { type: [string, 'null'], description: Outlet name for syndicated coverage. }
+        source_url: { type: [string, 'null'], format: uri, description: Original article URL for syndicated coverage. }
+        collection:
+          $ref: '#/components/schemas/Handle'
+        blueprint:
+          $ref: '#/components/schemas/Handle'
+        locale: { type: string, examples: [default] }
+        is_entry: { type: boolean }
+        mount: { type: [string, 'null'] }
+        order: { type: [integer, 'null'] }
+        origin_id: { type: [string, 'null'] }
+        seo:
+          type: object
+          properties:
+            enabled: { type: boolean }
+      required: [id, title, slug, date, status]
+    Handle:
+      type: object
+      properties:
+        title: { type: string }
+        handle: { type: string }
+    Error:
+      type: object
+      description: >-
+        Flat error envelope observed on 404 and 422. Not RFC 9457 — content-type is
+        application/json and the body carries a single `message` string.
+      properties:
+        message: { type: string }
+      required: [message]
+security: []

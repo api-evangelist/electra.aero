@@ -1,0 +1,25 @@
+generated: '2026-08-12'
+method: probed
+source: https://electra.aero/api/collections/news/entries
+docs: null
+limit_count: 0
+note: >-
+  Electra.aero publishes no rate-limit documentation — there is no developer portal to
+  publish one on. Anonymous responses carry no RateLimit-*, X-RateLimit-*, Retry-After or
+  equivalent header, so an agent has no runtime signal at all and would only discover a
+  limit by being cut off. Response headers observed - server, content-type, vary,
+  cache-control (no-cache, private), access-control-allow-origin (*), x-frame-options,
+  x-xss-protection, x-content-type-options. No 429 was provoked; no probing beyond ordinary
+  request volume was performed.
+limits: []
+headers:
+  request: []
+  response: []
+exhaustion:
+  status_code: null
+  observed: false
+x-evidence:
+  - url: https://electra.aero/api/collections/news/entries?limit=1
+    http_status: 200
+    ratelimit_headers: none
+    fetched: '2026-08-12'

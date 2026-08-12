@@ -1,0 +1,36 @@
+generated: '2026-08-12'
+method: probed
+source: openapi/electra.aero-content-openapi.yml
+docs: null
+summary:
+  types: []
+  api_key_in: []
+  oauth2_flows: []
+  model: none-required
+  public_read: true
+note: >-
+  The Electra.aero content API is fully anonymous. Verified by probe on 2026-08-12 - GET
+  https://electra.aero/api/collections/news/entries returns HTTP 200 application/json with
+  no Authorization header, no API key, no cookie and no CORS restriction
+  (access-control-allow-origin: *). The OpenAPI derived from those probes therefore declares
+  components.securitySchemes as empty and security as [] at both document and operation level.
+  There is no credential to obtain because Electra publishes no developer program, no
+  sign-up, and no key issuance. /.well-known/openid-configuration and
+  /.well-known/oauth-authorization-server both 404.
+schemes: []
+write_surface:
+  authenticated: unknown
+  note: >-
+    Only GET operations were probed. Statamic's control panel at /cp is the write surface
+    and is provider-internal; no anonymous write was attempted and none is documented.
+x-evidence:
+  - url: https://electra.aero/api/collections/news/entries?limit=1
+    http_status: 200
+    auth_sent: none
+    fetched: '2026-08-12'
+  - url: https://electra.aero/.well-known/openid-configuration
+    http_status: 404
+    fetched: '2026-08-12'
+  - url: https://electra.aero/.well-known/oauth-authorization-server
+    http_status: 404
+    fetched: '2026-08-12'

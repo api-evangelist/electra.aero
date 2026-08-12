@@ -1,0 +1,25 @@
+generated: '2026-08-12'
+method: probed
+source: https://electra.aero/
+docs: null
+plan_count: 0
+plans: []
+note: >-
+  Electra.aero sells hybrid-electric aircraft (EL9 Ultra Short) and defense airlift
+  capability, not API access. There is no pricing page, no plans page, no sign-up and no
+  metered developer product anywhere on the site — the sitemap (168 URLs) contains no
+  pricing, plans, billing or subscribe path. Aircraft commerce runs through pre-orders and
+  a contact form, and no unit price is published. The content API discovered at
+  https://electra.aero/api is free and anonymous, but that is an unmetered CMS surface
+  rather than a commercial plan. plan_count 0 is the honest answer, not a gap.
+commercial_model:
+  type: capital-equipment-and-defense-contracting
+  api_monetized: false
+  pricing_page: null
+  signup: null
+  contact: https://electra.aero/contact
+x-evidence:
+  - url: https://electra.aero/sitemap.xml
+    http_status: 200
+    note: 168 URLs; no pricing/plans/billing/signup path present.
+    fetched: '2026-08-12'

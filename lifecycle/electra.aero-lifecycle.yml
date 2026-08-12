@@ -1,0 +1,47 @@
+generated: '2026-08-12'
+method: probed
+source: https://electra.aero/
+versioning:
+  scheme: none
+  current: null
+  docs: null
+  detail: >-
+    The content API base path is /api with no version segment, no version request header
+    and no date-pinned releases. Consumers cannot pin behavior.
+deprecation:
+  policy_url: null
+  sunset_header: false
+  deprecation_header: false
+  detail: >-
+    No deprecation policy is published and no RFC 8594 Sunset/Deprecation headers were
+    observed. NO `Deprecation` pointer is emitted in apis.yml.
+sla:
+  url: null
+  uptime_target: null
+status_page:
+  url: null
+  detail: >-
+    status.electra.aero does not resolve (DNS NXDOMAIN) and the sitemap contains no status
+    or uptime page. NO `StatusPage` pointer is emitted in apis.yml.
+changelog:
+  url: null
+  detail: >-
+    https://electra.aero/news is a corporate newsroom (aircraft milestones, contracts,
+    coverage), not a dated API changelog. It is wired as `Blog`, not `ChangeLog`.
+deprecated_operations: []
+company_lifecycle:
+  founded: 2020
+  stage: pre-certification
+  detail: >-
+    FAA Part 23 type-certification application for the EL9 Ultra Short submitted December
+    2025; EL2 Goldfinch technology demonstrator first flew November 2023. Recorded because
+    it, not an API version, is what actually governs this company's product lifecycle.
+x-evidence:
+  - url: https://status.electra.aero/
+    http_status: 0
+    note: DNS does not resolve.
+    fetched: '2026-08-12'
+  - url: https://electra.aero/sitemap.xml
+    http_status: 200
+    note: No status, changelog, deprecation or SLA path among 168 URLs.
+    fetched: '2026-08-12'
