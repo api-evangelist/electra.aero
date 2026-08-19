@@ -1,0 +1,74 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Electra.aero Content API (news)",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "news",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List news entries",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://electra.aero/api/collections/news/entries",
+            "params": [
+              {
+                "name": "limit",
+                "value": "25",
+                "type": "query",
+                "description": "Entries per page. Observed honored (limit=1 and limit=2 both returned exactly that many entries and recalculated meta.last_page)."
+              },
+              {
+                "name": "page",
+                "value": "1",
+                "type": "query",
+                "description": "1-indexed page number. Reflected in meta.current_page and the links object."
+              },
+              {
+                "name": "fields",
+                "value": "title,slug,date,permalink",
+                "type": "query",
+                "description": "Comma-separated sparse fieldset. Observed - `fields=title,slug` returned entry objects containing only `title` and `slug`."
+              },
+              {
+                "name": "sort",
+                "value": "-date",
+                "type": "query",
+                "description": "Comma-separated sort fields; a leading `-` reverses. Observed - `sort=-date` returned the most recent entry first."
+              }
+            ]
+          },
+          "docs": "Returns a paginated list of published Electra news entries. Observed 124 total entries on 2026-08-12. Anonymous request, HTTP 200, content-type application/json."
+        },
+        {
+          "info": {
+            "name": "Get a single news entry",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://electra.aero/api/collections/news/entries/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "fc720a14-7b91-4222-955b-f6515d87ebff",
+                "type": "path",
+                "description": "Entry UUID, as returned in `data[].id` from listNewsEntries."
+              }
+            ]
+          },
+          "docs": "Returns one news entry by its Statamic UUID. Observed HTTP 200 for a known id."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

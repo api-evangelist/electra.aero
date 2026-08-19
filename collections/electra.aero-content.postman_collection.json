@@ -1,0 +1,340 @@
+{
+  "item": [
+    {
+      "id": "388d0554-d60f-4e19-bc73-e9e5c8dcceb8",
+      "name": "news",
+      "description": {
+        "content": "Electra newsroom and in-the-news entries.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "8a9c8278-92b2-47a3-8798-92ae1eb5cdb9",
+          "name": "List news entries",
+          "request": {
+            "name": "List news entries",
+            "description": {
+              "content": "Returns a paginated list of published Electra news entries. Observed 124 total entries on 2026-08-12. Anonymous request, HTTP 200, content-type application/json.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "collections",
+                "news",
+                "entries"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "<integer>",
+                  "description": "Entries per page. Observed honored (limit=1 and limit=2 both returned exactly that many entries and recalculated meta.last_page)."
+                },
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "<integer>",
+                  "description": "1-indexed page number. Reflected in meta.current_page and the links object."
+                },
+                {
+                  "disabled": false,
+                  "key": "fields",
+                  "value": "<string>",
+                  "description": "Comma-separated sparse fieldset. Observed - `fields=title,slug` returned entry objects containing only `title` and `slug`."
+                },
+                {
+                  "disabled": false,
+                  "key": "sort",
+                  "value": "<string>",
+                  "description": "Comma-separated sort fields; a leading `-` reverses. Observed - `sort=-date` returned the most recent entry first."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "f3f8927d-0c00-46ae-af3b-a5f3ae32bdbc",
+              "name": "A page of news entries.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "collections",
+                    "news",
+                    "entries"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "25"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "fields",
+                      "value": "title,slug,date,permalink"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "-date"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": [\n    {\n      \"id\": \"680e8eee-1980-c105-bea6-3ca74b075a0d\",\n      \"title\": \"string\",\n      \"slug\": \"string\",\n      \"date\": \"2022-03-18T18:15:42.672Z\",\n      \"status\": \"published\",\n      \"api_url\": \"https://sjG.wgjaA,dduXRkQLZZ8BJ\",\n      \"edit_url\": \"http://QLn.qwZLVXj\",\n      \"permalink\": \"http://GlsL.ufyuXsyK-QtncOvrk-cI+ps4Pn6Gpl0NT03\",\n      \"url\": \"string\",\n      \"uri\": \"string\",\n      \"summary\": \"string\",\n      \"last_modified\": \"2017-01-28T12:51:59.076Z\",\n      \"updated_at\": \"1973-09-19T19:18:10.798Z\",\n      \"updated_by\": {},\n      \"published\": false,\n      \"private\": true,\n      \"featured\": false,\n      \"featured_image\": {},\n      \"source_title\": \"string\",\n      \"source_url\": \"https://vjJTYfXCpLOhaNLezfRmyATVwHgWuWdBS.titgBPgk\",\n      \"collection\": {\n        \"title\": \"string\",\n        \"handle\": \"string\"\n      },\n      \"blueprint\": {\n        \"title\": \"string\",\n        \"handle\": \"string\"\n      },\n      \"locale\": \"default\",\n      \"is_entry\": false,\n      \"mount\": \"string\",\n      \"order\": 6598,\n      \"origin_id\": \"string\",\n      \"seo\": {\n        \"enabled\": true\n      }\n    },\n    {\n      \"id\": \"1dd5db5f-acd0-6639-7296-0889d7aa2f95\",\n      \"title\": \"string\",\n      \"slug\": \"string\",\n      \"date\": \"1959-11-30T16:46:42.785Z\",\n      \"status\": \"published\",\n      \"api_url\": \"https://GstfQVgRMfYYLrfSC.mtaPkSpvsLqiCxw2Y142t\",\n      \"edit_url\": \"http://RqydQYhlHgJHIxsRfxAIYkH.jksDM1wvfzbeY-\",\n      \"permalink\": \"https://FysirjouXphvcZRbMTaIAzP.zbxSEpiTTp6sNlWwwmzg\",\n      \"url\": \"string\",\n      \"uri\": \"string\",\n      \"summary\": \"string\",\n      \"last_modified\": \"1995-05-18T19:34:24.561Z\",\n      \"updated_at\": \"1981-02-28T10:18:45.440Z\",\n      \"updated_by\": {},\n      \"published\": true,\n      \"private\": true,\n      \"featured\": false,\n      \"featured_image\": {},\n      \"source_title\": \"string\",\n      \"source_url\": \"http://fprQMybhTfykvoWdbe.vvoI6-nrEB3BX\",\n      \"collection\": {\n        \"title\": \"string\",\n        \"handle\": \"string\"\n      },\n      \"blueprint\": {\n        \"title\": \"string\",\n        \"handle\": \"string\"\n      },\n      \"locale\": \"default\",\n      \"is_entry\": false,\n      \"mount\": \"string\",\n      \"order\": 8145,\n      \"origin_id\": \"string\",\n      \"seo\": {\n        \"enabled\": false\n      }\n    }\n  ],\n  \"links\": {\n    \"first\": \"http://bvicpqARzaTSoT.tulHg,1EvAQvlEgm.9y1jSV6zAXhsSHe2iNvY9MBMhZcSMeTb09fRYWiJ\",\n    \"last\": \"http://vsIpvZWDcoMBhjzlCkkSC.btf..uVHb,4.XS.PZHRiOWwOPQjYPFNi06,f7Ckqfw5.C5dYcfSr.-YDsb-dLhnX\",\n    \"prev\": \"http://QJqpBmKQcLpyDObCLERptt.wuEPmpB\",\n    \"next\": \"http://BpMpEeFzlYGypM.liiH.cS.8\"\n  },\n  \"meta\": {\n    \"current_page\": 5885,\n    \"from\": 8709,\n    \"to\": 3925,\n    \"last_page\": 4694,\n    \"per_page\": 6604,\n    \"total\": 3489,\n    \"path\": \"http://hAzurEKNtTqeXVLejPntQogEIvJdRcj.buzGKOVfS+XU\",\n    \"links\": [\n      {\n        \"url\": \"http://XRaheQpuPtXPMwe.vaufYFU+pd+LnuY9VFYzAXlKH1tbRjfX\",\n        \"label\": \"string\",\n        \"page\": 3645,\n        \"active\": false\n      },\n      {\n        \"url\": \"http://NUcBfiys.krtbGRF1q6LWjavITMHzmvPO37f9QzksA,9vLILLkq\",\n        \"label\": \"string\",\n        \"page\": 7125,\n        \"active\": false\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "51e01d32-a80a-4a1a-850d-b05c08ada08f",
+              "name": "Returned when an unpermitted query filter is supplied. Observed on `?filter[featured:is]=true` with body {\"message\":\"Forbidden filter: featured\"}.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "collections",
+                    "news",
+                    "entries"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "25"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "fields",
+                      "value": "title,slug,date,permalink"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "-date"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Forbidden filter: featured\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "e7538935-8ccc-4b5f-81f0-c0881d1df339",
+          "name": "Get a single news entry",
+          "request": {
+            "name": "Get a single news entry",
+            "description": {
+              "content": "Returns one news entry by its Statamic UUID. Observed HTTP 200 for a known id.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "collections",
+                "news",
+                "entries",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "id",
+                  "description": "(Required) Entry UUID, as returned in `data[].id` from listNewsEntries."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "763776fb-5a17-4794-8314-2af7a1fc74bf",
+              "name": "The news entry.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "collections",
+                    "news",
+                    "entries",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) Entry UUID, as returned in `data[].id` from listNewsEntries."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"id\": \"719543bc-3874-0c5d-525a-40db854a3b66\",\n    \"title\": \"string\",\n    \"slug\": \"string\",\n    \"date\": \"1990-11-11T03:54:07.629Z\",\n    \"status\": \"published\",\n    \"api_url\": \"http://hMLkoboRiGnhZmzeAKKQEVX.rrboeFac3imI+1meR+j\",\n    \"edit_url\": \"https://EKKAsjQTNLTNRxYrWA.fcmiGvrIdt1v,tsz099ACqJOSAjv8w-4vBkst06mIxXqflA6WDZ\",\n    \"permalink\": \"https://cKRHIeT.fxqffaqruJ9lXV\",\n    \"url\": \"string\",\n    \"uri\": \"string\",\n    \"summary\": \"string\",\n    \"last_modified\": \"1953-02-06T10:01:41.616Z\",\n    \"updated_at\": \"1980-03-31T23:26:08.702Z\",\n    \"updated_by\": {},\n    \"published\": true,\n    \"private\": true,\n    \"featured\": true,\n    \"featured_image\": {},\n    \"source_title\": \"string\",\n    \"source_url\": \"https://EUzJwIRfGUuMsXAwomKUdSkhYsukMsvB.xviaP8Z2vmYdNXrBOASuM2ZRMHXRdSRjn0Lpb6x7dbBNoH,63kCcx0E9LOe1apzrpD9umUnmOeaQaIEH1ov\",\n    \"collection\": {\n      \"title\": \"string\",\n      \"handle\": \"string\"\n    },\n    \"blueprint\": {\n      \"title\": \"string\",\n      \"handle\": \"string\"\n    },\n    \"locale\": \"default\",\n    \"is_entry\": false,\n    \"mount\": \"string\",\n    \"order\": 1070,\n    \"origin_id\": \"string\",\n    \"seo\": {\n      \"enabled\": false\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "005aeed3-d53d-4f35-8768-65515a4539d2",
+              "name": "No entry with that id. Observed body {\"message\":\"Not found.\"} — a bare message envelope, not RFC 9457 application/problem+json.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "collections",
+                    "news",
+                    "entries",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) Entry UUID, as returned in `data[].id` from listNewsEntries."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Not found.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://electra.aero/api",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "8fde1da6-3fc5-4525-a039-f67a538ff8e4",
+    "name": "Electra.aero Content API (news)",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Electra.aero publishes no developer program and no API reference. This document was DERIVED FROM LIVE PROBES of the Statamic Content REST API that electra.aero serves at https://electra.aero/api on 2026-08-12. Every path, parameter, status code and response field below was observed on an anonymous request — nothing here is inferred from the Statamic product documentation and nothing was invented.\nOnly the `news` collection is exposed. Probes of /api/collections/{videos,team,pages, careers,blog}/entries, /api/globals, /api/forms, /api/users, /api/assets/{container}, /api/navs/{nav}/tree and /api/taxonomies/{taxonomy}/terms all returned 404 {\"message\":\"Not found.\"}, so they are deliberately omitted rather than documented speculatively. Filtering via filter[...] is rejected with 422 {\"message\":\"Forbidden filter: <field>\"}.\nThis is an undocumented CMS content surface, not a product API. It is nonetheless real, anonymous, CORS-open (access-control-allow-origin: *) and machine-readable.\n\nContact Support:\n Name: Electra.aero",
+      "type": "text/plain"
+    }
+  }
+}

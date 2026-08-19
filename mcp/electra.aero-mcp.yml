@@ -2,34 +2,34 @@ generated: '2026-08-12'
 method: derived
 status: candidate
 source: openapi/electra.aero-content-openapi.yml
-note: >-
-  Electra.aero publishes NO MCP server. Searched the docs surface, the sitemap, npm
-  (@modelcontextprotocol/*), and probed mcp.electra.aero (DNS NXDOMAIN) — nothing. The
-  tools below are a CANDIDATE projection of the two probe-verified content operations,
-  offered as a starting point for Electra. NO `MCPServer` pointer is emitted in apis.yml,
-  because no server exists to point at; emitting one would credit Electra with an agent
-  surface it does not serve.
+note: Electra.aero publishes NO MCP server. Searched the docs surface, the sitemap, npm (@modelcontextprotocol/*),
+  and probed mcp.electra.aero (DNS NXDOMAIN) — nothing. The tools below are a CANDIDATE projection of
+  the two probe-verified content operations, offered as a starting point for Electra. NO `MCPServer` pointer
+  is emitted in apis.yml, because no server exists to point at; emitting one would credit Electra with
+  an agent surface it does not serve.
 server:
   name: electra-aero
   published: false
   transport: null
   url: null
 tools:
-  - name: list_electra_news
-    description: >-
-      List Electra.aero newsroom entries (press releases, milestones and syndicated
-      coverage), newest first. Supports paging and sparse fields.
-    source_operation: openapi/electra.aero-content-openapi.yml#listNewsEntries
-    input_schema_source: >-
-      Inherits parameters limit, page, fields, sort from listNewsEntries — all four
-      probe-verified.
-  - name: get_electra_news_entry
-    description: Fetch a single Electra.aero news entry by its UUID.
-    source_operation: openapi/electra.aero-content-openapi.yml#getNewsEntry
-    input_schema_source: Inherits the required path parameter `id` (uuid) from getNewsEntry.
+- name: list_electra_news
+  description: List Electra.aero newsroom entries (press releases, milestones and syndicated coverage),
+    newest first. Supports paging and sparse fields.
+  source_operation: openapi/electra.aero-content-openapi.yml#listNewsEntries
+  input_schema_source: Inherits parameters limit, page, fields, sort from listNewsEntries — all four probe-verified.
+- name: get_electra_news_entry
+  description: Fetch a single Electra.aero news entry by its UUID.
+  source_operation: openapi/electra.aero-content-openapi.yml#getNewsEntry
+  input_schema_source: Inherits the required path parameter `id` (uuid) from getNewsEntry.
 crosswalk:
   emitted: false
-  reason: >-
-    A tool crosswalk binds a PUBLISHED MCP (or GraphQL) surface to OpenAPI operations.
-    Electra publishes neither, so both sides of the crosswalk would be our own derivation
-    and it would record nothing that mcp/electra.aero-mcp.yml does not already say.
+  reason: A tool crosswalk binds a PUBLISHED MCP (or GraphQL) surface to OpenAPI operations. Electra publishes
+    neither, so both sides of the crosswalk would be our own derivation and it would record nothing that
+    mcp/electra.aero-mcp.yml does not already say.
+deployment:
+  mode: none
+  verified: derived
+  tools: 2
+  checked: '2026-08-12'
+  source: catalog MCP census
