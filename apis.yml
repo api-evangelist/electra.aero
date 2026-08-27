@@ -37,24 +37,16 @@ tags:
 - Content
 - Company
 apis:
-- name: Electra.aero Content API
-  description: >-
-    Public, unauthenticated, CORS-open JSON API serving the Electra.aero newsroom — press
-    releases, program milestones and syndicated coverage. This is the default Statamic
-    Content REST API behind the corporate site; Electra neither documents nor supports it.
-    Discovered and verified by probe on 2026-08-12 (124 entries, HTTP 200 anonymous). Only
-    the `news` collection is exposed; every other Statamic resource returns 404.
+- aid: electra.aero:electra.aero-news-api
+  name: Electra.aero News API
+  description: Electra newsroom and in-the-news entries.
   humanURL: https://electra.aero/news
   baseURL: https://electra.aero/api
   tags:
-  - Content
-  - News
-  - Newsroom
+  - news
   properties:
   - type: OpenAPI
-    url: openapi/electra.aero-content-openapi.yml
-  - type: Overlay
-    url: overlays/electra.aero-content-overlay.yaml
+    url: openapi/electra.aero-news-api-openapi.yml
   - type: DataModel
     url: data-model/electra.aero-data-model.yml
   - type: ErrorCatalog
@@ -65,6 +57,8 @@ maintainers:
 - FN: APIs.json
   email: info@apis.io
 common:
+- type: Overlay
+  url: overlays/electra.aero-content-overlay.yaml
 - type: AgenticAccess
   url: agentic-access/electra.aero-agentic-access.yml
 - type: Website
