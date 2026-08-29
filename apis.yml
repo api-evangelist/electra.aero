@@ -17,6 +17,18 @@ description: >-
   developer program, API reference or machine-readable specification; the one public,
   anonymous JSON API it serves is the Statamic CMS content surface behind its newsroom,
   discovered and documented here by probe.
+deliveryModel:
+  model: saas
+  open_source: false
+  commercial: true
+  callable_host: true
+  label: Hosted service · you call their endpoint
+  confidence: high
+  source:
+  - openapi
+  - pricing
+  generated: '2026-08-28'
+  method: derived
 image: https://electra-aero.s3.us-east-1.amazonaws.com/electra-logo.svg
 url: https://raw.githubusercontent.com/api-evangelist/electra.aero/refs/heads/main/apis.yml
 x-type: company
