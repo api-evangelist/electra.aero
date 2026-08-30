@@ -55,6 +55,8 @@ apis:
   humanURL: https://electra.aero/news
   baseURL: https://electra.aero/api
   tags:
+  - News
+  tags_raw:
   - news
   properties:
   - type: OpenAPI
