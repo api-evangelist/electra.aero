@@ -3,11 +3,7 @@ info:
   title: Electra.aero Content API () News API
   version: 1.0.0
   summary: Public, unauthenticated read-only JSON API serving the Electra newsroom.
-  description: 'Electra.aero publishes no developer program and no API reference. This document was DERIVED FROM LIVE PROBES of the Statamic Content REST API that electra.aero serves at https://electra.aero/api on 2026-08-12. Every path, parameter, status code and response field below was observed on an anonymous request — nothing here is inferred from the Statamic product documentation and nothing was invented.
-
-    Only the `news` collection is exposed. Probes of /api/collections/{videos,team,pages, careers,blog}/entries, /api/globals, /api/forms, /api/users, /api/assets/{container}, /api/navs/{nav}/tree and /api/taxonomies/{taxonomy}/terms all returned 404 {"message":"Not found."}, so they are deliberately omitted rather than documented speculatively. Filtering via filter[...] is rejected with 422 {"message":"Forbidden filter: <field>"}.
-
-    This is an undocumented CMS content surface, not a product API. It is nonetheless real, anonymous, CORS-open (access-control-allow-origin: *) and machine-readable.'
+  description: Electra.aero publishes no developer program and no API reference.
   contact:
     name: Electra.aero
     url: https://electra.aero/contact
@@ -23,7 +19,7 @@ servers:
   description: Production content API (observed 2026-08-12)
 security: []
 tags:
-- name: news
+- name: News
   description: Electra newsroom and in-the-news entries.
 paths:
   /collections/news/entries:
@@ -32,7 +28,7 @@ paths:
       summary: List news entries
       description: Returns a paginated list of published Electra news entries. Observed 124 total entries on 2026-08-12. Anonymous request, HTTP 200, content-type application/json.
       tags:
-      - news
+      - News
       security: []
       parameters:
       - name: limit
@@ -86,7 +82,7 @@ paths:
       summary: Get a single news entry
       description: Returns one news entry by its Statamic UUID. Observed HTTP 200 for a known id.
       tags:
-      - news
+      - News
       security: []
       parameters:
       - name: id
@@ -119,37 +115,6 @@ paths:
                 message: Not found.
 components:
   schemas:
-    Error:
-      type: object
-      description: Flat error envelope observed on 404 and 422. Not RFC 9457 — content-type is application/json and the body carries a single `message` string.
-      properties:
-        message:
-          type: string
-      required:
-      - message
-    PaginationLinks:
-      type: object
-      properties:
-        first:
-          type:
-          - string
-          - 'null'
-          format: uri
-        last:
-          type:
-          - string
-          - 'null'
-          format: uri
-        prev:
-          type:
-          - string
-          - 'null'
-          format: uri
-        next:
-          type:
-          - string
-          - 'null'
-          format: uri
     Handle:
       type: object
       properties:
@@ -199,6 +164,53 @@ components:
                 - 'null'
               active:
                 type: boolean
+    PaginationLinks:
+      type: object
+      properties:
+        first:
+          type:
+          - string
+          - 'null'
+          format: uri
+        last:
+          type:
+          - string
+          - 'null'
+          format: uri
+        prev:
+          type:
+          - string
+          - 'null'
+          format: uri
+        next:
+          type:
+          - string
+          - 'null'
+          format: uri
+    EntryCollection:
+      type: object
+      description: Laravel-style paginated envelope observed on the list operation.
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Entry'
+        links:
+          $ref: '#/components/schemas/PaginationLinks'
+        meta:
+          $ref: '#/components/schemas/PaginationMeta'
+      required:
+      - data
+      - links
+      - meta
+    Error:
+      type: object
+      description: Flat error envelope observed on 404 and 422. Not RFC 9457 — content-type is application/json and the body carries a single `message` string.
+      properties:
+        message:
+          type: string
+      required:
+      - message
     Entry:
       type: object
       description: Field set observed verbatim on a news entry. Values may be null where the editor left the field empty (observed on mount, order, origin_id, source_title, updated_by).
@@ -308,19 +320,3 @@ components:
       - slug
       - date
       - status
-    EntryCollection:
-      type: object
-      description: Laravel-style paginated envelope observed on the list operation.
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/Entry'
-        links:
-          $ref: '#/components/schemas/PaginationLinks'
-        meta:
-          $ref: '#/components/schemas/PaginationMeta'
-      required:
-      - data
-      - links
-      - meta
