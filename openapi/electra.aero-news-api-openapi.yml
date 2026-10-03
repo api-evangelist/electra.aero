@@ -240,36 +240,14 @@ components:
       - slug
       - date
       - status
-    Handle:
+    Error:
       type: object
+      description: Flat error envelope observed on 404 and 422. Not RFC 9457 — content-type is application/json and the body carries a single `message` string.
       properties:
-        title:
+        message:
           type: string
-        handle:
-          type: string
-    PaginationLinks:
-      type: object
-      properties:
-        first:
-          type:
-          - string
-          - 'null'
-          format: uri
-        last:
-          type:
-          - string
-          - 'null'
-          format: uri
-        prev:
-          type:
-          - string
-          - 'null'
-          format: uri
-        next:
-          type:
-          - string
-          - 'null'
-          format: uri
+      required:
+      - message
     PaginationMeta:
       type: object
       properties:
@@ -312,11 +290,33 @@ components:
                 - 'null'
               active:
                 type: boolean
-    Error:
+    PaginationLinks:
       type: object
-      description: Flat error envelope observed on 404 and 422. Not RFC 9457 — content-type is application/json and the body carries a single `message` string.
       properties:
-        message:
+        first:
+          type:
+          - string
+          - 'null'
+          format: uri
+        last:
+          type:
+          - string
+          - 'null'
+          format: uri
+        prev:
+          type:
+          - string
+          - 'null'
+          format: uri
+        next:
+          type:
+          - string
+          - 'null'
+          format: uri
+    Handle:
+      type: object
+      properties:
+        title:
           type: string
-      required:
-      - message
+        handle:
+          type: string
