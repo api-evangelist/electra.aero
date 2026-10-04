@@ -115,22 +115,78 @@ paths:
                 message: Not found.
 components:
   schemas:
-    EntryCollection:
+    PaginationMeta:
       type: object
-      description: Laravel-style paginated envelope observed on the list operation.
       properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/Entry'
+        current_page:
+          type: integer
+        from:
+          type:
+          - integer
+          - 'null'
+        to:
+          type:
+          - integer
+          - 'null'
+        last_page:
+          type: integer
+        per_page:
+          type: integer
+        total:
+          type: integer
+          description: Observed 124 on 2026-08-12.
+        path:
+          type: string
+          format: uri
         links:
-          $ref: '#/components/schemas/PaginationLinks'
-        meta:
-          $ref: '#/components/schemas/PaginationMeta'
-      required:
-      - data
-      - links
-      - meta
+          type: array
+          description: Rendered pager links (url, label, page, active).
+          items:
+            type: object
+            properties:
+              url:
+                type:
+                - string
+                - 'null'
+                format: uri
+              label:
+                type: string
+              page:
+                type:
+                - integer
+                - 'null'
+              active:
+                type: boolean
+    Handle:
+      type: object
+      properties:
+        title:
+          type: string
+        handle:
+          type: string
+    PaginationLinks:
+      type: object
+      properties:
+        first:
+          type:
+          - string
+          - 'null'
+          format: uri
+        last:
+          type:
+          - string
+          - 'null'
+          format: uri
+        prev:
+          type:
+          - string
+          - 'null'
+          format: uri
+        next:
+          type:
+          - string
+          - 'null'
+          format: uri
     Entry:
       type: object
       description: Field set observed verbatim on a news entry. Values may be null where the editor left the field empty (observed on mount, order, origin_id, source_title, updated_by).
@@ -248,75 +304,19 @@ components:
           type: string
       required:
       - message
-    PaginationMeta:
+    EntryCollection:
       type: object
+      description: Laravel-style paginated envelope observed on the list operation.
       properties:
-        current_page:
-          type: integer
-        from:
-          type:
-          - integer
-          - 'null'
-        to:
-          type:
-          - integer
-          - 'null'
-        last_page:
-          type: integer
-        per_page:
-          type: integer
-        total:
-          type: integer
-          description: Observed 124 on 2026-08-12.
-        path:
-          type: string
-          format: uri
-        links:
+        data:
           type: array
-          description: Rendered pager links (url, label, page, active).
           items:
-            type: object
-            properties:
-              url:
-                type:
-                - string
-                - 'null'
-                format: uri
-              label:
-                type: string
-              page:
-                type:
-                - integer
-                - 'null'
-              active:
-                type: boolean
-    PaginationLinks:
-      type: object
-      properties:
-        first:
-          type:
-          - string
-          - 'null'
-          format: uri
-        last:
-          type:
-          - string
-          - 'null'
-          format: uri
-        prev:
-          type:
-          - string
-          - 'null'
-          format: uri
-        next:
-          type:
-          - string
-          - 'null'
-          format: uri
-    Handle:
-      type: object
-      properties:
-        title:
-          type: string
-        handle:
-          type: string
+            $ref: '#/components/schemas/Entry'
+        links:
+          $ref: '#/components/schemas/PaginationLinks'
+        meta:
+          $ref: '#/components/schemas/PaginationMeta'
+      required:
+      - data
+      - links
+      - meta
