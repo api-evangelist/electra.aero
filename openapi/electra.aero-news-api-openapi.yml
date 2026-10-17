@@ -115,6 +115,29 @@ paths:
                 message: Not found.
 components:
   schemas:
+    PaginationLinks:
+      type: object
+      properties:
+        first:
+          type:
+          - string
+          - 'null'
+          format: uri
+        last:
+          type:
+          - string
+          - 'null'
+          format: uri
+        prev:
+          type:
+          - string
+          - 'null'
+          format: uri
+        next:
+          type:
+          - string
+          - 'null'
+          format: uri
     PaginationMeta:
       type: object
       properties:
@@ -164,29 +187,6 @@ components:
           type: string
         handle:
           type: string
-    PaginationLinks:
-      type: object
-      properties:
-        first:
-          type:
-          - string
-          - 'null'
-          format: uri
-        last:
-          type:
-          - string
-          - 'null'
-          format: uri
-        prev:
-          type:
-          - string
-          - 'null'
-          format: uri
-        next:
-          type:
-          - string
-          - 'null'
-          format: uri
     Entry:
       type: object
       description: Field set observed verbatim on a news entry. Values may be null where the editor left the field empty (observed on mount, order, origin_id, source_title, updated_by).
